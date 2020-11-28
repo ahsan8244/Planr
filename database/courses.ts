@@ -1,5 +1,5 @@
 import { Course } from '../types';
-import { LE1, RHT } from './venues';
+import { LE1, RHT, MWT1, MWT2, CPD1 } from './venues';
 
 export const MATH1853: Course = {
   code: 'MATH1853',
@@ -33,7 +33,7 @@ export const ENGG1330: Course = {
   name: 'Computer Programming I',
   prereqs: [],
   desc: '',
-  venue: LE1,
+  venue: CPD1,
   Timeslot: [],
 };
 
@@ -41,6 +41,15 @@ export const COMP2119: Course = {
   code: 'COMP2119',
   name: 'Intro to Data Structure and Algorithms',
   prereqs: [],
+  desc: 'Intro to DSA',
+  venue: RHT,
+  Timeslot: [],
+};
+
+export const COMP2120: Course = {
+  code: 'COMP2120',
+  name: 'Computer Organization',
+  prereqs: [ENGG1340],
   desc: 'Intro to DSA',
   venue: RHT,
   Timeslot: [],
@@ -64,12 +73,63 @@ export const COMP3340: Course = {
   Timeslot: [],
 };
 
+export const COMP3330: Course = {
+  code: 'COMP3330',
+  name: 'Interactive Mobile Application Programming and design',
+  prereqs: [],
+  desc: '',
+  venue: LE1,
+  Timeslot: [],
+};
+
+export const COMP2121: Course = {
+  code: 'COMP2121',
+  name: 'Discrete Mathematics',
+  prereqs: [MATH1853],
+  desc: '',
+  venue: MWT1,
+  Timeslot: [],
+};
+
+export const ACCT1011: Course = {
+  code: 'COMP1011',
+  name: 'Introductory Financial Accounting',
+  prereqs: [],
+  desc: '',
+  venue: MWT1,
+  Timeslot: [],
+};
+
+export const ECON1210: Course = {
+  code: 'COMP1210',
+  name: 'Introduction to Microeconomics',
+  prereqs: [],
+  desc: '',
+  venue: MWT1,
+  Timeslot: [],
+};
+
+export const STAT1603: Course = {
+  code: 'STAT1603',
+  name: 'Introductory Statistics',
+  prereqs: [],
+  desc: '',
+  venue: MWT2,
+  Timeslot: [],
+};
+
 export const mockCourses: Course[] = [
   COMP2119,
+  COMP2120,
+  COMP2121,
   COMP3314,
+  COMP3330,
   COMP3340,
   ENGG1330,
   ENGG1340,
   MATH1853,
   MATH1851,
+  ACCT1011,
+  ECON1210,
+  STAT1603,
 ];
