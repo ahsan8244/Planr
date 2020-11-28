@@ -92,7 +92,7 @@ export const COMP2121: Course = {
 };
 
 export const ACCT1011: Course = {
-  code: 'COMP1011',
+  code: 'ACCT1011',
   name: 'Introductory Financial Accounting',
   prereqs: [],
   desc: '',
@@ -101,7 +101,7 @@ export const ACCT1011: Course = {
 };
 
 export const ECON1210: Course = {
-  code: 'COMP1210',
+  code: 'ECON1210',
   name: 'Introduction to Microeconomics',
   prereqs: [],
   desc: '',
