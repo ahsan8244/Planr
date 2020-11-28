@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -12,6 +12,7 @@ import {
   ProfileScreen,
 } from '../screens';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import { SearchCourse } from '../components';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -98,12 +99,37 @@ function TabTwoNavigator() {
 const ProfileStack = createStackNavigator();
 
 function ProfileNavigator() {
+  const [pastCourses, setPastCourses] = useState<Course[]>([]);
+  useEffect(() => {
+    (async () => {
+      const pastCoursesStorage = await AsyncStorage.getItem('@past_courses');
+      setPastCourses(pastCoursesStorage ? JSON.parse(pastCoursesStorage) : []);
+    })();
+  }, []);
+
   return (
     <ProfileStack.Navigator>
       <ProfileStack.Screen
         name="ProfileScreen"
-        component={ProfileScreen}
+        component={props => (
+          <ProfileScreen
+            {...props}
+            pastCourses={pastCourses}
+            setPastCourses={setPastCourses}
+          />
+        )}
         options={{ headerTitle: 'Profile' }}
+      />
+      <ProfileStack.Screen
+        name="SelectPastCourses"
+        component={props => (
+          <SearchCourse
+            {...props}
+            pastCourses={pastCourses}
+            setPastCourses={setPastCourses}
+          />
+        )}
+        options={{ headerTitle: 'Select Past Courses' }}
       />
     </ProfileStack.Navigator>
   );

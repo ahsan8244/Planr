@@ -75,7 +75,7 @@ export const COMP3340: Course = {
 
 export const COMP3330: Course = {
   code: 'COMP3330',
-  name: 'Interactive Mobile Application Programming and design',
+  name: 'Interactive Mobile Application Programming and Design',
   prereqs: [],
   desc: '',
   venue: LE1,
