@@ -1,10 +1,9 @@
 import * as React from 'react';
 import { StyleSheet, Button } from 'react-native';
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+import { Text, View } from '../components';
 
-export default function TabTwoScreen({ navigation }) {
+export const TabTwoScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab Two</Text>
@@ -19,7 +18,7 @@ export default function TabTwoScreen({ navigation }) {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

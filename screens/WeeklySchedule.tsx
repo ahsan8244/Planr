@@ -4,7 +4,7 @@ import { IconButton } from 'react-native-paper';
 
 const { useState, useEffect } = React;
 
-import { DayPlanner } from '../components/DayPlanner';
+import { DayPlanner } from '../components';
 
 interface WeekDayType {
   id: number;
@@ -42,7 +42,7 @@ const weekDays: Array<WeekDayType> = [
   },
 ];
 
-const WeeklySchedule = () => {
+export const WeeklySchedule = () => {
   const [daysOfWeek, setDaysOfWeek] = useState<Array<WeekDayType>>(weekDays);
   const [currDay, setCurrDay] = useState<number>(new Date().getDay());
 
@@ -87,5 +87,3 @@ const WeeklySchedule = () => {
     </>
   );
 };
-
-export default WeeklySchedule;
