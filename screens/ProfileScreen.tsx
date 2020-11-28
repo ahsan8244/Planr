@@ -7,11 +7,21 @@ import { View, Text } from '../components/Themed';
 import { SearchCourse } from '../components/SearchCourse';
 import { Course } from '../types';
 
-export const ProfileScreen = ({ navigation, pastCourses, setPastCourses }) => {
+export const ProfileScreen = ({
+  navigation,
+  pastCourses,
+  setPastCourses,
+  userInterestList,
+  setUserInterestList,
+}) => {
   return (
     <View style={styles.container}>
       <UserInfo />
       <PastCourses navigation={navigation} pastCourses={pastCourses} />
+      <Interest
+        userInterestList={userInterestList}
+        setUserInterestList={setUserInterestList}
+      />
     </View>
   );
 };
@@ -19,7 +29,7 @@ export const ProfileScreen = ({ navigation, pastCourses, setPastCourses }) => {
 const UserInfo = () => {
   return (
     <View style={styles.userInfo}>
-      <Avatar.Text size={150} label={'JD'} style={{ marginBottom: 5 }} />
+      <Avatar.Text size={100} label={'JD'} style={{ marginBottom: 5 }} />
       <Title>John Doe</Title>
       <Subheading>Computer Science Junior</Subheading>
     </View>
@@ -61,6 +71,51 @@ const PastCourses = ({ navigation, pastCourses }) => {
   );
 };
 
+const Interest = ({ userInterestList, setUserInterestList }) => {
+  const interests: string[] = [
+    'Accounting',
+    'Arts',
+    'Economics',
+    'Engineering',
+    'Math',
+    'Philosophy',
+    'Science',
+  ];
+
+  return (
+    <View style={styles.interest}>
+      <Title>Interests</Title>
+      <ScrollView>
+        {interests.map((interest, index) => {
+          const isSelected: boolean = userInterestList.includes(interest);
+
+          return (
+            <Button
+              icon={isSelected ? 'check' : ''}
+              mode={'outlined'}
+              onPress={async () => {
+                if (!isSelected) {
+                  setUserInterestList([...userInterestList, interest]);
+                } else {
+                  setUserInterestList(
+                    userInterestList.filter(a => a !== interest)
+                  );
+                }
+                await AsyncStorage.setItem(
+                  '@user_interests',
+                  JSON.stringify(userInterestList)
+                );
+              }}
+            >
+              {interest}
+            </Button>
+          );
+        })}
+      </ScrollView>
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {},
   userInfo: {
@@ -68,6 +123,9 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   pastCourses: {
+    margin: 5,
+  },
+  interest: {
     margin: 5,
   },
 });
