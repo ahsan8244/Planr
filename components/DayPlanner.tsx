@@ -19,8 +19,8 @@ export const DayPlanner = () => {
 
   return (
     <ScrollView>
-      {[1, 2, 3, 3].map(time => (
-        <View style={{ display: 'flex', flexDirection: 'row' }}>
+      {[1, 2, 3, 3].map((time, index) => (
+        <View key={index} style={{ display: 'flex', flexDirection: 'row' }}>
           <View
             style={{
               flex: 2,
