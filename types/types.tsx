@@ -14,4 +14,5 @@ export type TabOneParamList = {
 
 export type TabTwoParamList = {
   TabTwoScreen: undefined;
+  WeeklySchedule: undefined;
 };

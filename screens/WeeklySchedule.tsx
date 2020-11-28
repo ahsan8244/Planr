@@ -44,7 +44,7 @@ const weekDays: Array<WeekDayType> = [
 
 const WeeklySchedule = () => {
   const [daysOfWeek, setDaysOfWeek] = useState<Array<WeekDayType>>(weekDays);
-  const [currDay, setCurrDay] = useState<number>(-1);
+  const [currDay, setCurrDay] = useState<number>(new Date().getDay());
 
   const setSelectedDay = (chosen_id: number) => {
     const newDaysOfWeek: Array<WeekDayType> = weekDays.map(day => {
@@ -60,8 +60,6 @@ const WeeklySchedule = () => {
   };
 
   useEffect(() => {
-    let todayDay = new Date();
-    setCurrDay(todayDay.getDay());
     setSelectedDay(currDay);
   }, []);
 
@@ -75,7 +73,14 @@ const WeeklySchedule = () => {
         }}
       >
         {daysOfWeek.map(({ id, icon }) => (
-          <IconButton key={id} icon={icon} onPress={() => setSelectedDay(id)} />
+          <IconButton
+            key={id}
+            icon={icon}
+            onPress={() => {
+              setSelectedDay(id);
+              setCurrDay(id);
+            }}
+          />
         ))}
       </View>
       <DayPlanner />

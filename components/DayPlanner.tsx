@@ -31,7 +31,7 @@ export const DayPlanner = () => {
             <Text style={{ padding: 5, fontWeight: 'bold' }}>11:00</Text>
             <Text style={{ padding: 5, fontWeight: 'bold' }}>12:00</Text>
           </View>
-          <Card style={{ flex: 11, margin: 10 }}>
+          <Card style={{ flex: 11, margin: 10 }} elevation={0}>
             <Card.Title
               title="Card Title"
               subtitle="Card Subtitle"
