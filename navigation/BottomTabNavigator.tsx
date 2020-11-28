@@ -5,7 +5,12 @@ import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import { TabOneScreen, TabTwoScreen, WeeklySchedule } from '../screens';
+import {
+  TabOneScreen,
+  TabTwoScreen,
+  WeeklySchedule,
+  ProfileScreen,
+} from '../screens';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -30,6 +35,15 @@ export default function BottomTabNavigator() {
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwoNavigator}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="ios-code" color={color} />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Profile"
+        component={ProfileNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="ios-code" color={color} />
@@ -78,5 +92,19 @@ function TabTwoNavigator() {
         options={{ headerTitle: 'Weekly Schedule' }}
       />
     </TabTwoStack.Navigator>
+  );
+}
+
+const ProfileStack = createStackNavigator();
+
+function ProfileNavigator() {
+  return (
+    <ProfileStack.Navigator>
+      <ProfileStack.Screen
+        name="ProfileScreen"
+        component={ProfileScreen}
+        options={{ headerTitle: 'Profile' }}
+      />
+    </ProfileStack.Navigator>
   );
 }
