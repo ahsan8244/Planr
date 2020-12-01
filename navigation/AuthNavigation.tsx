@@ -9,7 +9,7 @@ import { ColorSchemeName } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import { LoginScreen, WeeklySchedule } from '../screens';
+import { LoginScreen, SignupScreen } from '../screens';
 import { RootStackParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import NotFoundScreen from '../screens/NotFoundScreen';
@@ -42,9 +42,9 @@ function AuthNavigator() {
         options={{ headerTitle: 'Login' }}
       />
       <AuthStack.Screen
-        name="WeeklySchedule"
-        component={WeeklySchedule}
-        options={{ headerTitle: 'Weekly Schedule' }}
+        name="SignupScreen"
+        component={SignupScreen}
+        options={{ headerTitle: 'Sign Up' }}
       />
     </AuthStack.Navigator>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { TextInput, Button, Text } from 'react-native-paper';
 import 'firebase/firestore';
@@ -9,21 +9,25 @@ import { UserContext } from '../context';
 
 const db = firebase.firestore();
 
-export const LoginScreen = () => {
+export const LoginScreen = ({ navigation }) => {
   const { user, setUser } = useContext(UserContext);
+  const [isErrorVisible, setIsErrorVisible] = useState<boolean>(false);
 
   const onLogin = async () => {
-    const userRef = db
-      .collection('users')
-      .where('username', '==', username)
-      .where('password', '==', password)
-      .limit(1);
-    const snapshot = await userRef.get();
+    if (!user) {
+      const userRef = db
+        .collection('users')
+        .where('username', '==', username)
+        .where('password', '==', password)
+        .limit(1);
+      const snapshot = await userRef.get();
 
-    if (snapshot.empty) {
-      console.log('Invalid username or password');
-    } else {
-      setUser(snapshot.docs[0].data());
+      if (snapshot.empty) {
+        console.log('Invalid username or password');
+        setIsErrorVisible(true);
+      } else {
+        setUser(snapshot.docs[0].data());
+      }
     }
   };
 
@@ -45,13 +49,22 @@ export const LoginScreen = () => {
         onChangeText={password => setPassword(password)}
       />
       <Button
-        mode="contained"
+        mode="outlined"
         onPress={() => onLogin()}
-        style={{ marginTop: 5, marginBottom: 5 }}
+        style={{ marginTop: 5, marginBottom: 5, borderColor: '#6200ee' }}
       >
         Login
       </Button>
-      <Text>Doesn't have an account? </Text>
+      <Button
+        mode="contained"
+        onPress={() => navigation.navigate('SignupScreen')}
+        style={{ marginBottom: 5, borderColor: '#6200ee' }}
+      >
+        Sign Up
+      </Button>
+      <Text style={{ display: isErrorVisible ? 'flex' : 'none', color: 'red' }}>
+        Invalid credentials
+      </Text>
     </View>
   );
 };
