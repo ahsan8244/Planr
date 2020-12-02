@@ -12,24 +12,32 @@ const course = {
   },
 };
 
+const CourseComponent = ({ course, onCourseClick }: any) => (
+  <DefaultView style={styles.courseParent}>
+    <DefaultView style={styles.courseTime}>
+      <Text>11:00</Text>
+      <Text>12:00</Text>
+    </DefaultView>
+    <View style={styles.courseCard}>
+      <List.Item
+        title={course.code}
+        description={course.name}
+        onPress={() => onCourseClick(course)}
+      />
+    </View>
+  </DefaultView>
+);
+
 export const DayPlanner = ({ onCourseClick }: { onCourseClick: any }) => {
   return (
     <DefaultView>
       <ScrollView>
         {[1, 2, 3, 4].map(index => (
-          <DefaultView key={index} style={styles.courseParent}>
-            <DefaultView style={styles.courseTime}>
-              <Text>11:00</Text>
-              <Text>12:00</Text>
-            </DefaultView>
-            <View style={styles.courseCard}>
-              <List.Item
-                title={course.code}
-                description={course.name}
-                onPress={() => onCourseClick(course)}
-              />
-            </View>
-          </DefaultView>
+          <CourseComponent
+            key={index}
+            course={course}
+            onCourseClick={onCourseClick}
+          />
         ))}
       </ScrollView>
     </DefaultView>

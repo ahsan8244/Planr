@@ -94,7 +94,7 @@ export const WeeklySchedule = () => {
         {selectedCourse && (
           <>
             <Text>{selectedCourse.code}</Text>
-            <Text>{selectedCourse.name}</Text>
+            <Text numberOfLines={1}>{selectedCourse.name}</Text>
             <Text>{selectedCourse.venue.name}</Text>
             <LinkToMap
               text="Put Venue Code here"
