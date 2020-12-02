@@ -7,7 +7,7 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import {
   TabOneScreen,
-  TabTwoScreen,
+  PreferencesForm,
   WeeklySchedule,
   ProfileScreen,
 } from '../screens';
@@ -22,7 +22,10 @@ export default function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+      tabBarOptions={{
+        activeTintColor: Colors[colorScheme].tint,
+        style: { paddingBottom: 8 },
+      }}
     >
       <BottomTab.Screen
         name="TabOne"
@@ -34,11 +37,11 @@ export default function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoNavigator}
+        name="Generate"
+        component={GenerateNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+            <TabBarIcon name="ios-create" color={color} />
           ),
         }}
       />
@@ -77,22 +80,22 @@ function TabOneNavigator() {
   );
 }
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
+const CreateScheduleStack = createStackNavigator<TabTwoParamList>();
 
-function TabTwoNavigator() {
+function GenerateNavigator() {
   return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+    <CreateScheduleStack.Navigator>
+      <CreateScheduleStack.Screen
+        name="PreferencesForm"
+        component={PreferencesForm}
+        options={{ headerTitle: 'Select Preferences' }}
       />
       <TabOneStack.Screen
         name="WeeklySchedule"
         component={WeeklySchedule}
         options={{ headerTitle: 'Weekly Schedule' }}
       />
-    </TabTwoStack.Navigator>
+    </CreateScheduleStack.Navigator>
   );
 }
 

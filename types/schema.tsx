@@ -41,3 +41,21 @@ export interface Major {
 export interface Schedule {
   courses: Course[];
 }
+
+export interface ISchedule {
+  day: string;
+  startTime: number;
+  endTime: number;
+}
+
+export interface ISubsection {
+  code: string;
+  schedule: ISchedule[];
+}
+
+export interface ICourse {
+  code: string;
+  title: string;
+  venue: string;
+  subsections: ISubsection[];
+}
