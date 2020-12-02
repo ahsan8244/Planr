@@ -12,13 +12,13 @@ export const SearchCourse = ({ pastCourses, setPastCourses }: any) => {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
 
   return (
-    <View>
+    <>
       <Searchbar
         placeholder={'Search for a course'}
         value={searchQuery}
         onChangeText={query => setSearchQuery(query)}
       />
-      <ScrollView>
+      <ScrollView style={{ maxHeight: '100%' }}>
         {courses
           .filter(
             ({ code, name }, _) =>
@@ -69,14 +69,13 @@ export const SearchCourse = ({ pastCourses, setPastCourses }: any) => {
           </View>
         )}
       </Modal>
-    </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   modalContainer: {
     padding: 20,
-    backgroundColor: 'white',
     margin: 10,
     borderRadius: 5,
   },

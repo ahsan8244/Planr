@@ -9,7 +9,7 @@ import { UserContext } from '../context';
 
 const db = firebase.firestore();
 
-export const LoginScreen = ({ navigation }) => {
+export const LoginScreen = ({ navigation }: any) => {
   const { user, setUser } = useContext(UserContext);
   const [isErrorVisible, setIsErrorVisible] = useState<boolean>(false);
 

@@ -7,11 +7,17 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import {
   TabOneScreen,
-  TabTwoScreen,
+  PreferencesForm,
   WeeklySchedule,
   ProfileScreen,
+  ScheduleOptions,
 } from '../screens';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import {
+  BottomTabParamList,
+  TabOneParamList,
+  GenerateTabParamList,
+  ISubsectionToCourse,
+} from '../types';
 import { SearchCourse } from '../components';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -22,7 +28,10 @@ export default function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="TabOne"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+      tabBarOptions={{
+        activeTintColor: Colors[colorScheme].tint,
+        style: { paddingBottom: 8 },
+      }}
     >
       <BottomTab.Screen
         name="TabOne"
@@ -34,11 +43,11 @@ export default function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoNavigator}
+        name="Generate"
+        component={GenerateNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+            <TabBarIcon name="ios-create" color={color} />
           ),
         }}
       />
@@ -77,22 +86,26 @@ function TabOneNavigator() {
   );
 }
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
+const GenerateScheduleStack = createStackNavigator<GenerateTabParamList>();
 
-function TabTwoNavigator() {
+export type GenerateStackParamList = {
+  ScheduleOptions: { generatedSchedules: ISubsectionToCourse[][] };
+};
+
+function GenerateNavigator() {
   return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={{ headerTitle: 'Tab Two Title' }}
+    <GenerateScheduleStack.Navigator>
+      <GenerateScheduleStack.Screen
+        name="PreferencesForm"
+        component={PreferencesForm}
+        options={{ headerTitle: 'Select Preferences' }}
       />
-      <TabOneStack.Screen
-        name="WeeklySchedule"
-        component={WeeklySchedule}
-        options={{ headerTitle: 'Weekly Schedule' }}
+      <GenerateScheduleStack.Screen
+        name="ScheduleOptions"
+        component={ScheduleOptions}
+        options={{ headerTitle: 'Schedule Options' }}
       />
-    </TabTwoStack.Navigator>
+    </GenerateScheduleStack.Navigator>
   );
 }
 

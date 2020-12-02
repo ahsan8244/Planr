@@ -19,6 +19,7 @@ export default function App() {
     return null;
   } else if (user) {
     return (
+      //@ts-ignore
       <UserContext.Provider value={{ user, setUser }}>
         <PaperProvider>
           <SafeAreaProvider>
@@ -30,6 +31,7 @@ export default function App() {
     );
   } else {
     return (
+      //@ts-ignore
       <UserContext.Provider value={{ user, setUser }}>
         <PaperProvider>
           <SafeAreaProvider>
