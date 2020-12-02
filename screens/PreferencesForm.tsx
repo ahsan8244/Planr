@@ -11,10 +11,12 @@ import {
 //@ts-ignore
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 
-import { Text, View } from '../components';
+import { Text } from '../components';
 import { firebase } from '../firebase';
 import { ICourse } from '../types';
 import { getPossibleTimetables } from '../utils';
+import { StackScreenProps } from '@react-navigation/stack';
+import { GenerateStackParamList } from '../navigation/BottomTabNavigator';
 
 const { useEffect, useState } = React;
 
@@ -50,7 +52,9 @@ const getCourseDataForPrefs = (
   return courseData.filter(course => course.code in codesAsKeys);
 };
 
-export const PreferencesForm = ({ navigation }: any) => {
+export const PreferencesForm: React.FC<
+  StackScreenProps<GenerateStackParamList>
+> = ({ navigation }) => {
   const [courses, setCourses] = useState<ICourse[]>();
   const [numCourses, setNumCourses] = useState<number>();
   const [courseCodePrefs, setCourseCodePrefs] = useState<ICoursePrefsDict>({});
@@ -128,7 +132,13 @@ export const PreferencesForm = ({ navigation }: any) => {
                 );
                 setShowErrorDialog(true);
               } else {
-                console.log(getPossibleTimetables(courseData, numCourses));
+                const possibleTimetables = getPossibleTimetables(
+                  courseData,
+                  numCourses
+                );
+                navigation.navigate('ScheduleOptions', {
+                  generatedSchedules: possibleTimetables,
+                });
               }
             } else {
               setErrorMessage('please fill all your preferences');

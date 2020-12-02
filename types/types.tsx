@@ -12,7 +12,16 @@ export type TabOneParamList = {
   TabOneScreen: undefined;
 };
 
-export type TabTwoParamList = {
-  TabTwoScreen: undefined;
-  WeeklySchedule: undefined;
+export type GenerateTabParamList = {
+  PreferencesForm: undefined;
+  ScheduleOptions: undefined;
 };
+
+export type Day =
+  | 'Monday'
+  | 'Tuesday'
+  | 'Wednesday'
+  | 'Thursday'
+  | 'Friday'
+  | 'Saturday'
+  | 'Sunday';

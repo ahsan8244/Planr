@@ -10,8 +10,14 @@ import {
   PreferencesForm,
   WeeklySchedule,
   ProfileScreen,
+  ScheduleOptions,
 } from '../screens';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import {
+  BottomTabParamList,
+  TabOneParamList,
+  GenerateTabParamList,
+  ISubsectionToCourse,
+} from '../types';
 import { SearchCourse } from '../components';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -80,22 +86,26 @@ function TabOneNavigator() {
   );
 }
 
-const CreateScheduleStack = createStackNavigator<TabTwoParamList>();
+const GenerateScheduleStack = createStackNavigator<GenerateTabParamList>();
+
+export type GenerateStackParamList = {
+  ScheduleOptions: { generatedSchedules: ISubsectionToCourse[][] };
+};
 
 function GenerateNavigator() {
   return (
-    <CreateScheduleStack.Navigator>
-      <CreateScheduleStack.Screen
+    <GenerateScheduleStack.Navigator>
+      <GenerateScheduleStack.Screen
         name="PreferencesForm"
         component={PreferencesForm}
         options={{ headerTitle: 'Select Preferences' }}
       />
-      <TabOneStack.Screen
-        name="WeeklySchedule"
-        component={WeeklySchedule}
-        options={{ headerTitle: 'Weekly Schedule' }}
+      <GenerateScheduleStack.Screen
+        name="ScheduleOptions"
+        component={ScheduleOptions}
+        options={{ headerTitle: 'Schedule Options' }}
       />
-    </CreateScheduleStack.Navigator>
+    </GenerateScheduleStack.Navigator>
   );
 }
 

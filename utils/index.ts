@@ -1,10 +1,4 @@
-import { ICourse, ISchedule } from '../types';
-
-interface ISubsectionToCourse {
-  code: string;
-  belongsToCourse: ICourse;
-  schedule: ISchedule[];
-}
+import { ICourse, ISchedule, ISubsectionToCourse } from '../types';
 
 interface ICourseScheduleMap {
   [day: string]: {

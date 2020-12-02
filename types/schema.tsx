@@ -1,3 +1,5 @@
+import { Day } from './types';
+
 export interface User {
   name: string;
   email: string;
@@ -43,7 +45,7 @@ export interface Schedule {
 }
 
 export interface ISchedule {
-  day: string;
+  day: Day;
   startTime: number;
   endTime: number;
 }
@@ -58,4 +60,10 @@ export interface ICourse {
   title: string;
   venue: string;
   subsections: ISubsection[];
+}
+
+export interface ISubsectionToCourse {
+  code: string;
+  belongsToCourse: ICourse;
+  schedule: ISchedule[];
 }

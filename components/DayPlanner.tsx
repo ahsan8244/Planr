@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ScrollView, View as DefaultView, StyleSheet } from 'react-native';
 import { List } from 'react-native-paper';
 
+import { ISubsectionTiming } from '../screens/ScheduleOptions';
 import { Text, View } from './Themed';
 
 const course = {
@@ -16,33 +17,50 @@ const course = {
   },
 };
 
-const CourseComponent = ({ course, onCourseClick }: any) => (
+const CourseComponent = ({
+  course,
+  onCourseClick,
+}: {
+  course: ISubsectionTiming;
+  onCourseClick: any;
+}) => (
   <DefaultView style={styles.courseParent}>
     <DefaultView style={styles.courseTime}>
-      <Text>{course.schedule.startTime}</Text>
-      <Text>{course.schedule.endTime}</Text>
+      <Text>{course.timing.startTime}</Text>
+      <Text>{course.timing.endTime}</Text>
     </DefaultView>
     <View style={styles.courseCard}>
       <List.Item
-        title={course.belongsToCourse.code}
-        description={course.belongsToCourse.title}
+        title={course.subsection.belongsToCourse.code}
+        description={course.subsection.belongsToCourse.title}
         onPress={() => onCourseClick(course)}
       />
     </View>
   </DefaultView>
 );
 
-export const DayPlanner = ({ onCourseClick }: { onCourseClick: any }) => {
+export const DayPlanner = ({
+  onCourseClick,
+  dayPlan,
+}: {
+  onCourseClick: any;
+  dayPlan: ISubsectionTiming[];
+}) => {
   return (
     <DefaultView>
       <ScrollView>
-        {[1, 2, 3, 4].map(index => (
-          <CourseComponent
-            key={index}
-            course={course}
-            onCourseClick={onCourseClick}
-          />
-        ))}
+        {dayPlan
+          .sort(
+            (class1, class2) =>
+              class1.timing.startTime - class2.timing.startTime
+          )
+          .map((classInfo, idx) => (
+            <CourseComponent
+              key={idx}
+              course={classInfo}
+              onCourseClick={onCourseClick}
+            />
+          ))}
       </ScrollView>
     </DefaultView>
   );
