@@ -5,23 +5,27 @@ import { List } from 'react-native-paper';
 import { Text, View } from './Themed';
 
 const course = {
-  code: 'COMP3330',
-  name: 'Interactive Mobile Application Programming and Design',
-  venue: {
-    name: 'Some Venue',
+  belongsToCourse: {
+    code: 'COMP3330',
+    title: 'Interactive Mobile Application Programming and Design',
+    venue: 'Venue Venue',
+  },
+  schedule: {
+    startTime: '11:00',
+    endTime: '22:00',
   },
 };
 
 const CourseComponent = ({ course, onCourseClick }: any) => (
   <DefaultView style={styles.courseParent}>
     <DefaultView style={styles.courseTime}>
-      <Text>11:00</Text>
-      <Text>12:00</Text>
+      <Text>{course.schedule.startTime}</Text>
+      <Text>{course.schedule.endTime}</Text>
     </DefaultView>
     <View style={styles.courseCard}>
       <List.Item
-        title={course.code}
-        description={course.name}
+        title={course.belongsToCourse.code}
+        description={course.belongsToCourse.title}
         onPress={() => onCourseClick(course)}
       />
     </View>

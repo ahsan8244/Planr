@@ -5,7 +5,6 @@ import { IconButton, Modal } from 'react-native-paper';
 const { useState, useEffect } = React;
 
 import { DayPlanner, Text, LinkToMap } from '../components';
-import { Course as CourseType } from '../types';
 
 interface WeekDayType {
   id: number;
@@ -47,7 +46,7 @@ export const WeeklySchedule = () => {
   const [daysOfWeek, setDaysOfWeek] = useState<Array<WeekDayType>>(weekDays);
   const [currDay, setCurrDay] = useState<number>(new Date().getDay());
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [selectedCourse, setSelectedCourse] = useState<CourseType | null>(null);
+  const [selectedCourse, setSelectedCourse] = useState<any>(null);
 
   const setSelectedDay = (chosen_id: number) => {
     const newDaysOfWeek: Array<WeekDayType> = weekDays.map(day => {
@@ -62,7 +61,7 @@ export const WeeklySchedule = () => {
     setDaysOfWeek(newDaysOfWeek);
   };
 
-  const onCourseClick = (course: CourseType) => {
+  const onCourseClick = (course: any) => {
     setSelectedCourse(course);
     setIsModalVisible(true);
   };
@@ -93,11 +92,12 @@ export const WeeklySchedule = () => {
       >
         {selectedCourse && (
           <>
-            <Text>{selectedCourse.code}</Text>
-            <Text numberOfLines={1}>{selectedCourse.name}</Text>
-            <Text>{selectedCourse.venue.name}</Text>
+            <Text>{selectedCourse.belongsToCourse.code}</Text>
+            <Text numberOfLines={1}>
+              {selectedCourse.belongsToCourse.title}
+            </Text>
             <LinkToMap
-              text="Put Venue Code here"
+              text={selectedCourse.belongsToCourse.venue}
               url="https://maps.google.com/maps?daddr=38.7875851,-9.3906089"
             />
           </>
