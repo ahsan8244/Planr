@@ -1,9 +1,11 @@
 import * as React from 'react';
-import { Alert, Button, Linking, View } from 'react-native';
+import { Alert, Linking } from 'react-native';
+
+import { Button } from 'react-native-paper';
 
 const { useCallback } = React;
 
-const OpenURLButton = ({ url, children }: any) => {
+export const LinkToMap = ({ url, text }: { url: string; text: string }) => {
   const handlePress = useCallback(async () => {
     try {
       Linking.openURL(url);
@@ -12,15 +14,5 @@ const OpenURLButton = ({ url, children }: any) => {
     }
   }, [url]);
 
-  return <Button title={children} onPress={handlePress} />;
-};
-
-export const LinkToMap: React.FC = () => {
-  return (
-    <View>
-      <OpenURLButton url="https://maps.google.com/maps?daddr=38.7875851,-9.3906089">
-        Open Supported URL
-      </OpenURLButton>
-    </View>
-  );
+  return <Button onPress={handlePress}>{text}</Button>;
 };

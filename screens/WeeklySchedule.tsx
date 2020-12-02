@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { View } from 'react-native';
-import { IconButton } from 'react-native-paper';
+import { View, StyleSheet } from 'react-native';
+import { IconButton, Modal } from 'react-native-paper';
 
 const { useState, useEffect } = React;
 
-import { DayPlanner } from '../components';
+import { DayPlanner, Text, LinkToMap } from '../components';
+import { Course as CourseType } from '../types';
 
 interface WeekDayType {
   id: number;
@@ -45,6 +46,8 @@ const weekDays: Array<WeekDayType> = [
 export const WeeklySchedule = () => {
   const [daysOfWeek, setDaysOfWeek] = useState<Array<WeekDayType>>(weekDays);
   const [currDay, setCurrDay] = useState<number>(new Date().getDay());
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [selectedCourse, setSelectedCourse] = useState<CourseType | null>(null);
 
   const setSelectedDay = (chosen_id: number) => {
     const newDaysOfWeek: Array<WeekDayType> = weekDays.map(day => {
@@ -59,19 +62,18 @@ export const WeeklySchedule = () => {
     setDaysOfWeek(newDaysOfWeek);
   };
 
+  const onCourseClick = (course: CourseType) => {
+    setSelectedCourse(course);
+    setIsModalVisible(true);
+  };
+
   useEffect(() => {
     setSelectedDay(currDay);
   }, []);
 
   return (
     <>
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-        }}
-      >
+      <View style={styles.container}>
         {daysOfWeek.map(({ id, icon }) => (
           <IconButton
             key={id}
@@ -83,7 +85,38 @@ export const WeeklySchedule = () => {
           />
         ))}
       </View>
-      <DayPlanner />
+      <DayPlanner onCourseClick={onCourseClick} />
+      <Modal
+        visible={isModalVisible}
+        onDismiss={() => setIsModalVisible(false)}
+        contentContainerStyle={styles.modalContainer}
+      >
+        {selectedCourse && (
+          <>
+            <Text>{selectedCourse.code}</Text>
+            <Text>{selectedCourse.name}</Text>
+            <Text>{selectedCourse.venue.name}</Text>
+            <LinkToMap
+              text="Put Venue Code here"
+              url="https://maps.google.com/maps?daddr=38.7875851,-9.3906089"
+            />
+          </>
+        )}
+      </Modal>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  modalContainer: {
+    padding: 20,
+    backgroundColor: 'white',
+    margin: 10,
+    borderRadius: 5,
+  },
+});
