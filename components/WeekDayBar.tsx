@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { IconButton } from 'react-native-paper';
 
 import { weekDays as weekDaysList } from '../constants/WeekDays';
@@ -33,7 +33,19 @@ export const WeekDayBar: React.FC = ({ currDay, setCurrDay }: any) => {
   );
 
   useEffect(() => {
-    setSelectedDay(currDay);
+    const numberToWeekday: {
+      [id: string]: string;
+    } = {
+      1: 'Monday',
+      2: 'Tuesday',
+      3: 'Wednesday',
+      4: 'Thursday',
+      5: 'Friday',
+      6: 'Saturday',
+    };
+
+    const today: string = new Date().getDay().toString();
+    setSelectedDay(numberToWeekday[today]);
   }, []);
 
   const setSelectedDay = (chosen_id: string) => {
@@ -43,6 +55,7 @@ export const WeekDayBar: React.FC = ({ currDay, setCurrDay }: any) => {
       newDisplayWeek[chosen_id].icon.lastIndexOf('-')
     );
 
+    setCurrDay(chosen_id);
     setDisplayWeek(newDisplayWeek);
   };
 
@@ -54,7 +67,6 @@ export const WeekDayBar: React.FC = ({ currDay, setCurrDay }: any) => {
           icon={displayWeek[id].icon}
           onPress={() => {
             setSelectedDay(id);
-            setCurrDay(id);
           }}
         />
       ))}

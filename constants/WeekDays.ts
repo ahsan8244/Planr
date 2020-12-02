@@ -5,25 +5,25 @@ export interface WeekDays {
 }
 
 export const weekDays: WeekDays = {
-  '1': {
+  Monday: {
     name: 'Monday',
   },
-  '2': {
+  Tuesday: {
     name: 'Tuesday',
   },
-  '3': {
+  Wednesday: {
     name: 'Wednesday',
   },
-  '4': {
+  Thursday: {
     name: 'Thursday',
   },
-  '5': {
+  Friday: {
     name: 'Friday',
   },
-  '6': {
+  Saturday: {
     name: 'Saturday',
   },
-  '7': {
+  Sunday: {
     name: 'Sunday',
   },
 };
