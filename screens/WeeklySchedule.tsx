@@ -59,6 +59,7 @@ export const WeeklySchedule = () => {
           };
     });
     setDaysOfWeek(newDaysOfWeek);
+    setCurrDay(chosen_id);
   };
 
   const onCourseClick = (course: any) => {
@@ -79,7 +80,6 @@ export const WeeklySchedule = () => {
             icon={icon}
             onPress={() => {
               setSelectedDay(id);
-              setCurrDay(id);
             }}
           />
         ))}
