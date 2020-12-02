@@ -1,30 +1,34 @@
 import * as React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { IconButton } from 'react-native-paper';
 
-import { weekDays } from '../constants/WeekDays';
+import { weekDays as weekDaysList } from '../constants/WeekDays';
 
 const { useState, useEffect } = React;
 
-interface WeekDayType {
-  id: number;
-  name: string;
-}
-interface WeekDayWithIconType extends WeekDayType {
-  icon: string;
+interface WeekDayWithIconType {
+  [id: string]: {
+    name: string;
+    icon: string;
+  };
 }
 
-const weekDaysList = weekDays as Array<WeekDayType>;
-const getIconForWeekday = (id: number): string => `alpha-a-circle-outline`;
+const getIconForWeekday = (id: string): string =>
+  `alpha-${weekDaysList[id].name[0].toLowerCase()}-circle-outline`;
 
 export const WeekDayBar: React.FC = ({ currDay, setCurrDay }: any) => {
-  const weekDaysListWithIcons = weekDaysList.map(({ id, name }) => ({
-    id,
-    name,
-    icon: getIconForWeekday(id),
-  }));
+  const weekDaysListWithIcons = Object.keys(weekDaysList).reduce(
+    (acc, id) => ({
+      ...acc,
+      [id]: {
+        name: weekDaysList[id].name,
+        icon: getIconForWeekday(id),
+      },
+    }),
+    {}
+  ) as WeekDayWithIconType;
 
-  const [displayWeek, setDisplayWeek] = useState<Array<WeekDayWithIconType>>(
+  const [displayWeek, setDisplayWeek] = useState<WeekDayWithIconType>(
     weekDaysListWithIcons
   );
 
@@ -32,30 +36,25 @@ export const WeekDayBar: React.FC = ({ currDay, setCurrDay }: any) => {
     setSelectedDay(currDay);
   }, []);
 
-  const setSelectedDay = (chosen_id: number) => {
-    const newDaysOfWeek: Array<WeekDayWithIconType> = weekDaysListWithIcons.map(
-      day => {
-        const { id, name, icon } = day;
-        return id != chosen_id
-          ? day
-          : {
-              id,
-              name,
-              icon: icon.slice(0, day.icon.lastIndexOf('-')),
-            };
-      }
+  const setSelectedDay = (chosen_id: string) => {
+    const newDisplayWeek: WeekDayWithIconType = weekDaysListWithIcons;
+    newDisplayWeek[chosen_id].icon = newDisplayWeek[chosen_id].icon.slice(
+      0,
+      newDisplayWeek[chosen_id].icon.lastIndexOf('-')
     );
-    setDisplayWeek(newDaysOfWeek);
-    setCurrDay(chosen_id);
+
+    setDisplayWeek(newDisplayWeek);
   };
+
   return (
     <View style={styles.container}>
-      {displayWeek.map(({ id, icon }) => (
+      {Object.keys(displayWeek).map(id => (
         <IconButton
           key={id}
-          icon={icon}
+          icon={displayWeek[id].icon}
           onPress={() => {
             setSelectedDay(id);
+            setCurrDay(id);
           }}
         />
       ))}

@@ -7,7 +7,9 @@ const { useState } = React;
 import { DayPlanner, Text, LinkToMap, WeekDayBar } from '../components';
 
 export const WeeklySchedule = () => {
-  const [currDay, setCurrDay] = useState<number>(new Date().getDay());
+  const [currDay, setCurrDay] = useState<string>(
+    new Date().getDay().toString()
+  );
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [selectedCourse, setSelectedCourse] = useState<any>(null);
 

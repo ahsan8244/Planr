@@ -1,30 +1,29 @@
-export const weekDays = [
-  {
-    id: 1,
+export interface WeekDays {
+  [id: string]: {
+    name: string;
+  };
+}
+
+export const weekDays: WeekDays = {
+  '1': {
     name: 'Monday',
   },
-  {
-    id: 2,
+  '2': {
     name: 'Tuesday',
   },
-  {
-    id: 3,
+  '3': {
     name: 'Wednesday',
   },
-  {
-    id: 4,
+  '4': {
     name: 'Thursday',
   },
-  {
-    id: 5,
+  '5': {
     name: 'Friday',
   },
-  {
-    id: 6,
+  '6': {
     name: 'Saturday',
   },
-  {
-    id: 7,
+  '7': {
     name: 'Sunday',
   },
-];
+};
