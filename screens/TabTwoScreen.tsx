@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { StyleSheet, Button } from 'react-native';
 
-import { Text, View } from '../components';
+import { LinkToMap, Text, View } from '../components';
 
-export const TabTwoScreen = ({ navigation }) => {
+export const TabTwoScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab Two</Text>
@@ -16,6 +16,7 @@ export const TabTwoScreen = ({ navigation }) => {
         title="Go to Weekly Schedule"
         onPress={() => navigation.navigate('WeeklySchedule')}
       />
+      <LinkToMap />
     </View>
   );
 };

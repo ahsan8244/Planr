@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import { List, Searchbar, Modal, Text, Button } from 'react-native-paper';
+
 import { mockCourses as courses } from '../database';
 import { Course } from '../types';
 
-export const SearchCourse = ({ pastCourses, setPastCourses }) => {
+export const SearchCourse = ({ pastCourses, setPastCourses }: any) => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
 
   return (
-    <View style={styles.container}>
+    <View>
       <Searchbar
         placeholder={'Search for a course'}
         value={searchQuery}
@@ -74,7 +74,6 @@ export const SearchCourse = ({ pastCourses, setPastCourses }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {},
   modalContainer: {
     padding: 20,
     backgroundColor: 'white',
