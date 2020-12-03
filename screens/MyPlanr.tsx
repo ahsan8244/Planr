@@ -59,7 +59,7 @@ export const MyPlanr: React.FC = () => {
     };
 
     fetchSchedule();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     const fetchLocations = async () => {
