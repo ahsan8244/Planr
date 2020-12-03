@@ -6,9 +6,8 @@ import React, { useState, useEffect } from 'react';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import {
-  TabOneScreen,
+  CoursesList,
   PreferencesForm,
-  WeeklySchedule,
   ProfileScreen,
   ScheduleOptions,
 } from '../screens';
@@ -27,18 +26,18 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Courses"
       tabBarOptions={{
         activeTintColor: Colors[colorScheme].tint,
         style: { paddingBottom: 8 },
       }}
     >
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
+        name="Courses"
+        component={CoursesNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+            <TabBarIcon name="ios-list" color={color} />
           ),
         }}
       />
@@ -72,17 +71,17 @@ function TabBarIcon(props: { name: string; color: string }) {
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
+const CoursesStack = createStackNavigator<TabOneParamList>();
 
-function TabOneNavigator() {
+function CoursesNavigator() {
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
-        options={{ headerTitle: 'Tab One Title' }}
+    <CoursesStack.Navigator>
+      <CoursesStack.Screen
+        name="Courses"
+        component={CoursesList}
+        options={{ headerTitle: 'Courses' }}
       />
-    </TabOneStack.Navigator>
+    </CoursesStack.Navigator>
   );
 }
 

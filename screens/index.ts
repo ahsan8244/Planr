@@ -1,4 +1,4 @@
-export { TabOneScreen } from './TabOneScreen';
+export { CoursesList } from './CourseList';
 export { PreferencesForm } from './PreferencesForm';
 export { ProfileScreen } from './ProfileScreen';
 export { LoginScreen } from './LoginScreen';
