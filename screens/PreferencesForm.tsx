@@ -136,9 +136,16 @@ export const PreferencesForm: React.FC<
                   courseData,
                   numCourses
                 );
-                navigation.navigate('ScheduleOptions', {
-                  generatedSchedules: possibleTimetables,
-                });
+                if (!possibleTimetables.length) {
+                  setErrorMessage(
+                    'No possible schedule! Try changing your course preferences!'
+                  );
+                  setShowErrorDialog(true);
+                } else {
+                  navigation.navigate('ScheduleOptions', {
+                    generatedSchedules: possibleTimetables,
+                  });
+                }
               }
             } else {
               setErrorMessage('please fill all your preferences');

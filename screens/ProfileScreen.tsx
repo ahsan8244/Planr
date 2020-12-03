@@ -10,8 +10,6 @@ import { UserContext } from '../context';
 
 export const ProfileScreen = ({
   navigation,
-  pastCourses,
-  setPastCourses,
   userInterestList,
   setUserInterestList,
 }) => {
@@ -27,7 +25,6 @@ export const ProfileScreen = ({
   return (
     <View style={styles.container}>
       <UserInfo />
-      <PastCourses navigation={navigation} pastCourses={pastCourses} />
       <Interest
         userInterestList={userInterestList}
         setUserInterestList={setUserInterestList}
@@ -63,41 +60,6 @@ const UserInfo = () => {
         onPress={() => setUser(null)}
       >
         Logout
-      </Button>
-    </View>
-  );
-};
-
-const PastCourses = ({ navigation, pastCourses }) => {
-  const pastCoursesUnique: Course[] = [];
-  for (const course of pastCourses) {
-    if (!pastCoursesUnique.map(course => course.code).includes(course.code)) {
-      pastCoursesUnique.push(course);
-    }
-  }
-
-  return (
-    <View style={styles.pastCourses}>
-      <Title>Past courses</Title>
-      <ScrollView style={{ maxHeight: 200 }}>
-        {pastCoursesUnique.length > 0 ? (
-          pastCoursesUnique.map((course, index) => (
-            <List.Item
-              key={index}
-              title={course.code}
-              description={course.name}
-            />
-          ))
-        ) : (
-          <Subheading>You have not added any past courses.</Subheading>
-        )}
-      </ScrollView>
-      <Button
-        mode="contained"
-        onPress={() => navigation.navigate('SelectPastCourses')}
-        style={{ marginTop: 5 }}
-      >
-        Add past courses
       </Button>
     </View>
   );
@@ -152,9 +114,6 @@ const styles = StyleSheet.create({
   container: {},
   userInfo: {
     alignItems: 'center',
-    margin: 5,
-  },
-  pastCourses: {
     margin: 5,
   },
   interest: {

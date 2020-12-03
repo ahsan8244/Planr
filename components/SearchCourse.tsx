@@ -6,7 +6,7 @@ import { List, Searchbar, Modal, Text, Button } from 'react-native-paper';
 import { Course, ICourse } from '../types';
 import { firebase } from '../firebase';
 
-export const SearchCourse = ({ pastCourses, setPastCourses }: any) => {
+export const SearchCourse = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null);
@@ -79,22 +79,6 @@ export const SearchCourse = ({ pastCourses, setPastCourses }: any) => {
             <Text>{selectedCourse.code}</Text>
             <Text>{selectedCourse.title}</Text>
             <Text>{selectedCourse.venue}</Text>
-            <Button
-              mode="contained"
-              style={{ marginTop: 30 }}
-              onPress={() => {
-                (async () => {
-                  setPastCourses([...pastCourses, selectedCourse]);
-                  await AsyncStorage.setItem(
-                    '@past_courses',
-                    JSON.stringify([...pastCourses, selectedCourse])
-                  );
-                  setIsModalVisible(false);
-                })();
-              }}
-            >
-              Add to past courses
-            </Button>
           </View>
         )}
       </Modal>

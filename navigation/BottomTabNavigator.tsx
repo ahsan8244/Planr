@@ -136,14 +136,11 @@ function GenerateNavigator() {
 const ProfileStack = createStackNavigator();
 
 function ProfileNavigator() {
-  const [pastCourses, setPastCourses] = useState<Course[]>([]);
   const [userInterestList, setUserInterestList] = useState<string[]>([]);
 
   useEffect(() => {
     (async () => {
-      const pastCoursesStorage = await AsyncStorage.getItem('@past_courses');
       const userInterestStorage = await AsyncStorage.getItem('@user_interests');
-      setPastCourses(pastCoursesStorage ? JSON.parse(pastCoursesStorage) : []);
       setUserInterestList(
         userInterestStorage ? JSON.parse(userInterestStorage) : []
       );
@@ -157,8 +154,6 @@ function ProfileNavigator() {
         component={props => (
           <ProfileScreen
             {...props}
-            pastCourses={pastCourses}
-            setPastCourses={setPastCourses}
             userInterestList={userInterestList}
             setUserInterestList={setUserInterestList}
           />
@@ -167,13 +162,7 @@ function ProfileNavigator() {
       />
       <ProfileStack.Screen
         name="SelectPastCourses"
-        component={props => (
-          <SearchCourse
-            {...props}
-            pastCourses={pastCourses}
-            setPastCourses={setPastCourses}
-          />
-        )}
+        component={props => <SearchCourse {...props} />}
         options={{ headerTitle: 'Select Past Courses' }}
       />
     </ProfileStack.Navigator>

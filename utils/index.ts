@@ -52,11 +52,17 @@ const timingsAreClashing = (
     endTime: existingEndTime,
   } = existingTiming;
 
-  if (currStartTime === existingStartTime && currEndTime === existingEndTime) {
+  if (
+    Number(currStartTime) === Number(existingStartTime) &&
+    Number(currEndTime) === Number(existingEndTime)
+  ) {
     return true;
   }
 
-  if (currStartTime < existingEndTime && currEndTime > existingStartTime) {
+  if (
+    Number(currStartTime) < Number(existingEndTime) &&
+    Number(currEndTime) > Number(existingStartTime)
+  ) {
     return true;
   }
 
