@@ -1,14 +1,15 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Alert } from 'react-native';
 import { Modal, Button } from 'react-native-paper';
 
-const { useState, useEffect } = React;
+const { useState, useEffect, useContext } = React;
 
 import { DayPlanner, Text, LinkToMap, WeekDayBar } from '../components';
 import { GenerateStackParamList } from '../navigation/BottomTabNavigator';
 import { Day, ISubsectionToCourse } from '../types';
 import { firebase } from '../firebase';
+import { UserContext } from '../context';
 
 export interface ISubsectionTiming {
   subsection: ISubsectionToCourse;
@@ -73,6 +74,7 @@ export const ScheduleOptions: React.FC<
 > = ({ route }) => {
   const { generatedSchedules } = route.params;
 
+  const { user, setUser } = useContext(UserContext);
   const [currDay, setCurrDay] = useState<Day>('Monday');
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [
@@ -167,8 +169,20 @@ export const ScheduleOptions: React.FC<
           compact
           color="green"
           onPress={() => {
-            //save current schedule selection as user's schedule
-            //or we could export it to calendar idk
+            (async () => {
+              const userRef = db
+                .collection('users')
+                .where('username', '==', user.username)
+                .limit(1);
+              const snapshot = await userRef.get();
+
+              await db
+                .collection('users')
+                .doc(snapshot.docs[0].id)
+                .set({ ...user, schedule: currClassesMappedToDays });
+              setUser({ ...user, schedule: currClassesMappedToDays });
+              Alert.alert('Successfully added schedule!');
+            })();
           }}
         >
           Confirm
