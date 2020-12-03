@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { StyleSheet, View, ScrollView, Linking } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { List, Searchbar, Modal, Text, Button } from 'react-native-paper';
+import {
+  List,
+  Searchbar,
+  Modal,
+  Text,
+  Button,
+  Title,
+  Subheading,
+} from 'react-native-paper';
 
 import { Course, ICourse } from '../types';
 import { firebase } from '../firebase';
@@ -76,9 +84,26 @@ export const SearchCourse = () => {
           <Text>Example Modal. Click outside this area to dismiss.</Text>
         ) : (
           <View>
-            <Text>{selectedCourse.code}</Text>
-            <Text>{selectedCourse.title}</Text>
-            <Text>{selectedCourse.venue}</Text>
+            <Title>{selectedCourse.code}</Title>
+            <Subheading>{selectedCourse.title}</Subheading>
+            <Subheading>{selectedCourse.venue}</Subheading>
+            {selectedCourse.link && (
+              <Button
+                mode="outlined"
+                onPress={() => {
+                  Linking.openURL(selectedCourse.link);
+                }}
+              >
+                Go to course page
+              </Button>
+            )}
+            <Button
+              mode="contained"
+              onPress={() => setIsModalVisible(false)}
+              style={{ marginTop: 5 }}
+            >
+              Close
+            </Button>
           </View>
         )}
       </Modal>
@@ -91,5 +116,6 @@ const styles = StyleSheet.create({
     padding: 20,
     margin: 10,
     borderRadius: 5,
+    backgroundColor: '#fff',
   },
 });
