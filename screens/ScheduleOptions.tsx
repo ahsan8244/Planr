@@ -19,7 +19,7 @@ export interface ISubsectionTiming {
   };
 }
 
-interface ILocation {
+export interface ILocation {
   code: string;
   name: string;
 }
@@ -37,7 +37,7 @@ interface IClassesMappedToDays {
 //@ts-ignore
 const db = firebase.firestore();
 
-const GoToMap = ({
+export const GoToMap = ({
   course,
   locations,
 }: {

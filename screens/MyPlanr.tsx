@@ -1,10 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Modal } from 'react-native-paper';
+import { StyleSheet } from 'react-native';
 
 import { DayPlanner, WeekDayBar, Text, View } from '../components';
 import { Day, User } from '../types';
-import { ISubsectionTiming } from './ScheduleOptions';
+import { ISubsectionTiming, ILocation } from './ScheduleOptions';
 import { firebase } from '../firebase';
 import { UserContext } from '../context';
+import { GoToMap } from './ScheduleOptions';
 
 interface IUserSchedule {
   Monday: ISubsectionTiming[];
@@ -22,6 +25,17 @@ export const MyPlanr: React.FC = () => {
   const [currDay, setCurrDay] = useState<Day>('Monday');
   const [loading, setLoading] = useState(false);
   const [userSchedule, setUserSchedule] = useState<IUserSchedule>();
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [
+    selectedCourse,
+    setSelectedCourse,
+  ] = useState<ISubsectionTiming | null>(null);
+  const [locations, setLocations] = useState<Array<ILocation> | null>([]);
+
+  const onCourseClick = (course: ISubsectionTiming) => {
+    setSelectedCourse(course);
+    setIsModalVisible(true);
+  };
 
   //@ts-ignore
   const db = firebase.firestore();
@@ -47,7 +61,18 @@ export const MyPlanr: React.FC = () => {
     fetchSchedule();
   }, []);
 
-  const onCourseClick = () => {};
+  useEffect(() => {
+    const fetchLocations = async () => {
+      const coursesRef = db.collection('locations');
+      const snapshot = await coursesRef.get();
+
+      if (!snapshot.empty) {
+        const data = snapshot.docs.map((doc: any) => doc.data());
+        setLocations(data);
+      }
+    };
+    fetchLocations();
+  }, []);
 
   if (loading) {
     return (
@@ -74,6 +99,30 @@ export const MyPlanr: React.FC = () => {
         onCourseClick={onCourseClick}
         dayPlan={userSchedule[currDay]}
       />
+      <Modal
+        visible={isModalVisible}
+        onDismiss={() => setIsModalVisible(false)}
+        contentContainerStyle={styles.modalContainer}
+      >
+        {locations && selectedCourse && (
+          <>
+            <Text>{selectedCourse?.subsection?.belongsToCourse?.code}</Text>
+            <Text numberOfLines={1}>
+              {selectedCourse?.subsection?.belongsToCourse?.title}
+            </Text>
+            <GoToMap course={selectedCourse} locations={locations} />
+          </>
+        )}
+      </Modal>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  modalContainer: {
+    padding: 20,
+    backgroundColor: 'white',
+    margin: 10,
+    borderRadius: 5,
+  },
+});

@@ -78,6 +78,7 @@ export interface ICourse {
   title: string;
   venue: string;
   subsections: ISubsection[];
+  link?: string;
 }
 
 export interface ISubsectionToCourse {
