@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ScrollView, View as DefaultView, StyleSheet } from 'react-native';
-import { List } from 'react-native-paper';
+import { List, Title } from 'react-native-paper';
 
 import { ISubsectionTiming } from '../screens/ScheduleOptions';
 import { Text, View } from './Themed';
@@ -45,18 +45,24 @@ export const DayPlanner = ({
   return (
     <DefaultView>
       <ScrollView>
-        {dayPlan
-          .sort(
-            (class1, class2) =>
-              class1.timing.startTime - class2.timing.startTime
-          )
-          .map((classInfo, idx) => (
-            <CourseComponent
-              key={idx}
-              course={classInfo}
-              onCourseClick={onCourseClick}
-            />
-          ))}
+        {dayPlan.length > 0 ? (
+          dayPlan
+            .sort(
+              (class1, class2) =>
+                class1.timing.startTime - class2.timing.startTime
+            )
+            .map((classInfo, idx) => (
+              <CourseComponent
+                key={idx}
+                course={classInfo}
+                onCourseClick={onCourseClick}
+              />
+            ))
+        ) : (
+          <View style={{ flex: 1, alignItems: 'center' }}>
+            <Title>No classes today 🎉</Title>
+          </View>
+        )}
       </ScrollView>
     </DefaultView>
   );

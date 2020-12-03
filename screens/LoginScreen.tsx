@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, Platform } from 'react-native';
-import { TextInput, Button, Text } from 'react-native-paper';
+import { TextInput, Button, Text, Title } from 'react-native-paper';
 import 'firebase/firestore';
 
 import { View } from '../components';
@@ -96,6 +96,18 @@ export const LoginScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
+      <View
+        style={{
+          display: 'flex',
+          alignItems: 'baseline',
+          marginBottom: 24,
+          flexDirection: 'row',
+          justifyContent: 'center',
+        }}
+      >
+        <Text style={{ fontSize: 36 }}>Planr</Text>
+        <Text style={{ fontSize: 48, color: '#a845d6' }}>.</Text>
+      </View>
       <TextInput
         mode="outlined"
         label="Username"
