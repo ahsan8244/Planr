@@ -56,6 +56,7 @@ const UserInfo = () => {
       <Subheading>
         {user.major} {level[user.year]}
       </Subheading>
+      <Subheading>Faculty of {user.faculty}</Subheading>
       <Button
         mode="contained"
         style={{ marginTop: 5 }}
