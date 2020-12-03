@@ -5,6 +5,7 @@ export interface User {
   email: string;
   username: string;
   password: string;
+  faculty: string;
   major: string;
   year: number;
 }

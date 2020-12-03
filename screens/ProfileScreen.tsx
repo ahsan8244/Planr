@@ -15,7 +15,7 @@ export const ProfileScreen = ({
   userInterestList,
   setUserInterestList,
 }) => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   if (!user) {
     return (
       <View style={styles.container}>
@@ -26,7 +26,7 @@ export const ProfileScreen = ({
 
   return (
     <View style={styles.container}>
-      <UserInfo user={user} />
+      <UserInfo />
       <PastCourses navigation={navigation} pastCourses={pastCourses} />
       <Interest
         userInterestList={userInterestList}
@@ -36,7 +36,8 @@ export const ProfileScreen = ({
   );
 };
 
-const UserInfo = ({ user }) => {
+const UserInfo = () => {
+  const { user, setUser } = useContext(UserContext);
   const level = { 1: 'Freshman', 2: 'Sophomore', 3: 'Junior', 4: 'Senior' };
 
   return (
@@ -55,6 +56,14 @@ const UserInfo = ({ user }) => {
       <Subheading>
         {user.major} {level[user.year]}
       </Subheading>
+      <Subheading>Faculty of {user.faculty}</Subheading>
+      <Button
+        mode="contained"
+        style={{ marginTop: 5 }}
+        onPress={() => setUser(null)}
+      >
+        Logout
+      </Button>
     </View>
   );
 };
