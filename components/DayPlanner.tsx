@@ -10,7 +10,7 @@ const CourseComponent = ({
   onCourseClick,
 }: {
   course: ISubsectionTiming;
-  onCourseClick: any;
+  onCourseClick: (course: ISubsectionTiming) => void;
 }) => (
   <DefaultView style={styles.courseParent}>
     <DefaultView style={styles.courseTime}>
@@ -31,7 +31,7 @@ export const DayPlanner = ({
   onCourseClick,
   dayPlan,
 }: {
-  onCourseClick: any;
+  onCourseClick: (course: ISubsectionTiming) => void;
   dayPlan: ISubsectionTiming[];
 }) => {
   return (

@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { IconButton } from 'react-native-paper';
 
 import { weekDays as weekDaysList } from '../constants/WeekDays';
+import { Day } from '../types';
 
 const { useState, useEffect } = React;
 
@@ -16,7 +17,11 @@ interface WeekDayWithIconType {
 const getIconForWeekday = (id: string): string =>
   `alpha-${weekDaysList[id].name[0].toLowerCase()}-circle-outline`;
 
-export const WeekDayBar: React.FC = ({ setCurrDay }: any) => {
+export const WeekDayBar: React.ReactNode = ({
+  setCurrDay,
+}: {
+  setCurrDay: React.Dispatch<React.SetStateAction<Day>>;
+}) => {
   const weekDaysListWithIcons = Object.keys(weekDaysList).reduce(
     (acc, id) => ({
       ...acc,
