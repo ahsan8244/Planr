@@ -47,10 +47,9 @@ const GoToMap = ({
   const [location, setLocation] = useState<ILocation | null>();
 
   useEffect(() => {
-    const locationCode: string = course?.subsection?.belongsToCourse?.venue?.substr(
-      0,
-      course?.subsection?.belongsToCourse?.venue?.indexOf(' ')
-    );
+    const locationCode: string = course?.subsection?.belongsToCourse?.venue?.split(
+      ' '
+    )[0];
     const filteredLocations = locations.filter(
       ({ code }) => code == locationCode
     );
