@@ -28,7 +28,7 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Courses"
+      initialRouteName="MyPlanr"
       tabBarOptions={{
         activeTintColor: Colors[colorScheme].tint,
         style: { paddingBottom: 8 },
@@ -66,7 +66,7 @@ export default function BottomTabNavigator() {
         component={ProfileNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+            <TabBarIcon name="ios-person" color={color} />
           ),
         }}
       />

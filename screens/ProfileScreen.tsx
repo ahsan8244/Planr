@@ -43,7 +43,7 @@ const UserInfo = () => {
         size={100}
         label={user.name
           .split(' ')
-          .map(str => str[0])
+          .map(str => str[0].toUpperCase())
           .join('')}
         style={{ marginBottom: 5 }}
       />
