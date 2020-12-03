@@ -125,6 +125,10 @@ export const ScheduleOptions: React.FC<
 
   useEffect(() => {
     currClassesMappedToDays && setCurrDayPlan(currClassesMappedToDays[currDay]);
+  }, [currClassesMappedToDays, currDay]);
+
+  useEffect(() => {
+    currClassesMappedToDays && setCurrDayPlan(currClassesMappedToDays[currDay]);
   }, [currDay]);
 
   useEffect(() => {
