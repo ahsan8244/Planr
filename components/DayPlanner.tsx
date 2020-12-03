@@ -5,18 +5,6 @@ import { List } from 'react-native-paper';
 import { ISubsectionTiming } from '../screens/ScheduleOptions';
 import { Text, View } from './Themed';
 
-const course = {
-  belongsToCourse: {
-    code: 'COMP3330',
-    title: 'Interactive Mobile Application Programming and Design',
-    venue: 'Venue Venue',
-  },
-  schedule: {
-    startTime: '11:00',
-    endTime: '22:00',
-  },
-};
-
 const CourseComponent = ({
   course,
   onCourseClick,

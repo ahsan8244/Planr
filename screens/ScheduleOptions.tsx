@@ -34,7 +34,10 @@ export const ScheduleOptions: React.FC<
 
   const [currDay, setCurrDay] = useState<Day>('Monday');
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [selectedCourse, setSelectedCourse] = useState<any>(null);
+  const [
+    selectedCourse,
+    setSelectedCourse,
+  ] = useState<ISubsectionTiming | null>(null);
   const [currScheduleIndex, setCurrScheduleIndex] = useState(0);
   const [currScheduleOption, setCurrScheduleOption] = useState(
     generatedSchedules ? generatedSchedules[currScheduleIndex] : []
@@ -45,7 +48,7 @@ export const ScheduleOptions: React.FC<
   ] = useState<IClassesMappedToDays>();
   const [currDayPlan, setCurrDayPlan] = useState<ISubsectionTiming[]>([]);
 
-  const onCourseClick = (course: any) => {
+  const onCourseClick = (course: ISubsectionTiming) => {
     setSelectedCourse(course);
     setIsModalVisible(true);
   };
@@ -116,7 +119,7 @@ export const ScheduleOptions: React.FC<
           Confirm
         </Button>
       </View>
-      <WeekDayBar currDay={currDay} setCurrDay={setCurrDay} />
+      <WeekDayBar setCurrDay={setCurrDay} />
       <DayPlanner onCourseClick={onCourseClick} dayPlan={currDayPlan} />
       <Modal
         visible={isModalVisible}
@@ -125,12 +128,12 @@ export const ScheduleOptions: React.FC<
       >
         {selectedCourse && (
           <>
-            <Text>{selectedCourse.belongsToCourse.code}</Text>
+            <Text>{selectedCourse?.subsection?.belongsToCourse?.code}</Text>
             <Text numberOfLines={1}>
-              {selectedCourse.belongsToCourse.title}
+              {selectedCourse?.subsection?.belongsToCourse?.title}
             </Text>
             <LinkToMap
-              text={selectedCourse.belongsToCourse.venue}
+              text={selectedCourse?.subsection?.belongsToCourse?.venue}
               url="https://maps.google.com/maps?daddr=38.7875851,-9.3906089"
             />
           </>
