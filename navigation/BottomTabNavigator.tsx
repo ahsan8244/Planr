@@ -28,7 +28,7 @@ export default function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Courses"
+      initialRouteName="MyPlanr"
       tabBarOptions={{
         activeTintColor: Colors[colorScheme].tint,
         style: { paddingBottom: 8 },

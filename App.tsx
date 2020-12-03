@@ -9,8 +9,10 @@ import Navigation from './navigation';
 import AuthNavigation from './navigation/AuthNavigation';
 import { User } from './types';
 import { UserContext } from './context';
+import { LogBox } from 'react-native';
 
 export default function App() {
+  LogBox.ignoreAllLogs(true);
   const [user, setUser] = useState<User | null>(null);
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
