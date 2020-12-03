@@ -4,8 +4,14 @@ export type RootStackParamList = {
 };
 
 export type BottomTabParamList = {
+  MyPlanr: undefined;
   Courses: undefined;
   Generate: undefined;
+  Profile: undefined;
+};
+
+export type MyPlanrTabParamList = {
+  MyPlanr: undefined;
 };
 
 export type TabOneParamList = {

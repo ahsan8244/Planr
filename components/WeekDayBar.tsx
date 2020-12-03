@@ -17,11 +17,9 @@ interface WeekDayWithIconType {
 const getIconForWeekday = (id: string): string =>
   `alpha-${weekDaysList[id].name[0].toLowerCase()}-circle-outline`;
 
-export const WeekDayBar: React.ReactNode = ({
-  setCurrDay,
-}: {
+export const WeekDayBar: React.FC<{
   setCurrDay: React.Dispatch<React.SetStateAction<Day>>;
-}) => {
+}> = ({ setCurrDay }) => {
   const weekDaysListWithIcons = Object.keys(weekDaysList).reduce(
     (acc, id) => ({
       ...acc,

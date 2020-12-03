@@ -7,6 +7,7 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import {
   CoursesList,
+  MyPlanr,
   PreferencesForm,
   ProfileScreen,
   ScheduleOptions,
@@ -16,6 +17,7 @@ import {
   TabOneParamList,
   GenerateTabParamList,
   ISubsectionToCourse,
+  MyPlanrTabParamList,
 } from '../types';
 import { SearchCourse } from '../components';
 
@@ -32,6 +34,15 @@ export default function BottomTabNavigator() {
         style: { paddingBottom: 8 },
       }}
     >
+      <BottomTab.Screen
+        name="MyPlanr"
+        component={MyPlanrNavigator}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="ios-calendar" color={color} />
+          ),
+        }}
+      />
       <BottomTab.Screen
         name="Courses"
         component={CoursesNavigator}
@@ -71,6 +82,20 @@ function TabBarIcon(props: { name: string; color: string }) {
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
+const MyPlanrStack = createStackNavigator<MyPlanrTabParamList>();
+
+function MyPlanrNavigator() {
+  return (
+    <MyPlanrStack.Navigator>
+      <MyPlanrStack.Screen
+        name="MyPlanr"
+        component={MyPlanr}
+        options={{ headerTitle: 'MyPlanr' }}
+      />
+    </MyPlanrStack.Navigator>
+  );
+}
+
 const CoursesStack = createStackNavigator<TabOneParamList>();
 
 function CoursesNavigator() {
