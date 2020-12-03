@@ -1,5 +1,13 @@
 import { Day } from './types';
 
+interface ISubsectionTiming {
+  subsection: ISubsectionToCourse;
+  timing: {
+    startTime: number;
+    endTime: number;
+  };
+}
+
 export interface User {
   name: string;
   email: string;
@@ -8,6 +16,15 @@ export interface User {
   faculty: string;
   major: string;
   year: number;
+  schedule?: {
+    Monday: ISubsectionTiming[];
+    Tuesday: ISubsectionTiming[];
+    Wednesday: ISubsectionTiming[];
+    Thursday: ISubsectionTiming[];
+    Friday: ISubsectionTiming[];
+    Saturday: ISubsectionTiming[];
+    Sunday: ISubsectionTiming[];
+  };
 }
 
 export interface Venue {

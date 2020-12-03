@@ -17,6 +17,7 @@ export const SignupScreen = () => {
   const [facultiesData, setFacultiesData] = useState<
     { name: string; majors: string[] }[]
   >([]);
+
   const [userInput, setUserInput] = useState<User>({
     name: '',
     email: '',
