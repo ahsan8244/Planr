@@ -8,6 +8,7 @@ const { useState, useEffect } = React;
 import { DayPlanner, Text, LinkToMap, WeekDayBar } from '../components';
 import { GenerateStackParamList } from '../navigation/BottomTabNavigator';
 import { Day, ISubsectionToCourse } from '../types';
+import { firebase } from '../firebase';
 
 export interface ISubsectionTiming {
   subsection: ISubsectionToCourse;
@@ -15,6 +16,11 @@ export interface ISubsectionTiming {
     startTime: number;
     endTime: number;
   };
+}
+
+interface ILocation {
+  code: string;
+  name: string;
 }
 
 interface IClassesMappedToDays {
@@ -26,6 +32,41 @@ interface IClassesMappedToDays {
   Saturday: ISubsectionTiming[];
   Sunday: ISubsectionTiming[];
 }
+
+//@ts-ignore
+const db = firebase.firestore();
+
+const GoToMap = ({
+  course,
+  locations,
+}: {
+  course: ISubsectionTiming;
+  locations: Array<ILocation>;
+}) => {
+  const [location, setLocation] = useState<ILocation | null>();
+
+  useEffect(() => {
+    const locationCode: string = course?.subsection?.belongsToCourse?.venue?.substr(
+      0,
+      course?.subsection?.belongsToCourse?.venue?.indexOf(' ')
+    );
+    const filteredLocations = locations.filter(
+      ({ code }) => code == locationCode
+    );
+
+    setLocation(filteredLocations[0]);
+  }, [course]);
+
+  const locationToURL = (name: string) => name.toLowerCase().replace(' ', '+');
+  return location ? (
+    <LinkToMap
+      text={course?.subsection?.belongsToCourse?.venue}
+      url={`https://www.google.com/maps/search/?api=1&query=${locationToURL(
+        location.name
+      )}`}
+    />
+  ) : null;
+};
 
 export const ScheduleOptions: React.FC<
   StackScreenProps<GenerateStackParamList, 'ScheduleOptions'>
@@ -47,6 +88,7 @@ export const ScheduleOptions: React.FC<
     setCurrClassesMappedToDays,
   ] = useState<IClassesMappedToDays>();
   const [currDayPlan, setCurrDayPlan] = useState<ISubsectionTiming[]>([]);
+  const [locations, setLocations] = useState<Array<ILocation> | null>();
 
   const onCourseClick = (course: ISubsectionTiming) => {
     setSelectedCourse(course);
@@ -82,6 +124,19 @@ export const ScheduleOptions: React.FC<
   useEffect(() => {
     currClassesMappedToDays && setCurrDayPlan(currClassesMappedToDays[currDay]);
   }, [currDay]);
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      const coursesRef = db.collection('locations');
+      const snapshot = await coursesRef.get();
+
+      if (!snapshot.empty) {
+        const data = snapshot.docs.map((doc: any) => doc.data());
+        setLocations(data);
+      }
+    };
+    fetchLocations();
+  }, []);
 
   return (
     <>
@@ -126,16 +181,13 @@ export const ScheduleOptions: React.FC<
         onDismiss={() => setIsModalVisible(false)}
         contentContainerStyle={styles.modalContainer}
       >
-        {selectedCourse && (
+        {locations && selectedCourse && (
           <>
             <Text>{selectedCourse?.subsection?.belongsToCourse?.code}</Text>
             <Text numberOfLines={1}>
               {selectedCourse?.subsection?.belongsToCourse?.title}
             </Text>
-            <LinkToMap
-              text={selectedCourse?.subsection?.belongsToCourse?.venue}
-              url="https://maps.google.com/maps?daddr=38.7875851,-9.3906089"
-            />
+            <GoToMap course={selectedCourse} locations={locations} />
           </>
         )}
       </Modal>
