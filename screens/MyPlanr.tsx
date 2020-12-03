@@ -19,15 +19,8 @@ interface IUserSchedule {
   Sunday: ISubsectionTiming[];
 }
 
-function useForceUpdate() {
-  const [value, setValue] = useState(0); // integer state
-  return () => setValue(value => ++value); // update the state to force render
-}
-
-export const MyPlanr: React.FC = ({ navigation }) => {
+export const MyPlanr: React.FC = () => {
   const { user } = useContext(UserContext);
-
-  const forceUpdate = useForceUpdate();
 
   const [currDay, setCurrDay] = useState<Day>('Monday');
   const [loading, setLoading] = useState(false);
@@ -48,11 +41,6 @@ export const MyPlanr: React.FC = ({ navigation }) => {
   const db = firebase.firestore();
 
   useEffect(() => {
-    navigation.addListener('didFocus', (payload: any) => {
-      console.log(payload);
-      forceUpdate();
-    });
-
     const fetchSchedule = async () => {
       const userRef = db
         .collection('users')
