@@ -5,6 +5,14 @@ import { List } from 'react-native-paper';
 import { ISubsectionTiming } from '../screens/ScheduleOptions';
 import { Text, View } from './Themed';
 
+const formatTime = (num: number) => {
+  const stringTime = '0000' + num.toString();
+  const timeWithZero = stringTime.slice(stringTime.length - 4);
+
+  const formattedTime = `${timeWithZero.slice(0, 2)}:${timeWithZero.slice(2)}`;
+  return formattedTime;
+};
+
 const CourseComponent = ({
   course,
   onCourseClick,
@@ -14,12 +22,12 @@ const CourseComponent = ({
 }) => (
   <DefaultView style={styles.courseParent}>
     <DefaultView style={styles.courseTime}>
-      <Text>{course.timing.startTime}</Text>
-      <Text>{course.timing.endTime}</Text>
+      <Text>{formatTime(course.timing.startTime)}</Text>
+      <Text>{formatTime(course.timing.endTime)}</Text>
     </DefaultView>
     <View style={styles.courseCard}>
       <List.Item
-        title={course.subsection.belongsToCourse.code}
+        title={`${course.subsection.belongsToCourse.code} ${course.subsection.code}`}
         description={course.subsection.belongsToCourse.title}
         onPress={() => onCourseClick(course)}
       />
