@@ -46,6 +46,7 @@ export const LoginScreen = ({ navigation }: any) => {
         mode="outlined"
         label="Password"
         value={password}
+        secureTextEntry
         onChangeText={password => setPassword(password)}
       />
       <Button

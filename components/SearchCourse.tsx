@@ -1,15 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { List, Searchbar, Modal, Text, Button } from 'react-native-paper';
 
-import { mockCourses as courses } from '../database';
-import { Course } from '../types';
+import { Course, ICourse } from '../types';
+import { firebase } from '../firebase';
 
 export const SearchCourse = ({ pastCourses, setPastCourses }: any) => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null);
+  const [courses, setCourses] = useState<ICourse[]>();
+
+  //@ts-ignore
+  const db = firebase.firestore();
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      const coursesRef = db.collection('courses');
+      const snapshot = await coursesRef.get();
+
+      if (!snapshot.empty) {
+        const data = snapshot.docs.map((doc: any) => doc.data());
+        const dataMappedToArray: ICourse[] = data.map(
+          (item: any) => item[Object.keys(item)[0]]
+        );
+        setCourses(dataMappedToArray);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
+  if (!courses) {
+    return (
+      <>
+        <Text>Loading...</Text>
+      </>
+    );
+  }
 
   return (
     <>
@@ -21,16 +50,16 @@ export const SearchCourse = ({ pastCourses, setPastCourses }: any) => {
       <ScrollView style={{ maxHeight: '100%' }}>
         {courses
           .filter(
-            ({ code, name }, _) =>
+            ({ code, title }, _) =>
               code.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              name.toLowerCase().includes(searchQuery.toLowerCase())
+              title.toLowerCase().includes(searchQuery.toLowerCase())
           )
           .sort((course1, course2) => course1.code > course2.code)
           .map((course, index) => (
             <List.Item
               key={index}
               title={course.code}
-              description={course.name}
+              description={course.title}
               onPress={() => {
                 setSelectedCourse(course);
                 setIsModalVisible(true);
@@ -48,8 +77,8 @@ export const SearchCourse = ({ pastCourses, setPastCourses }: any) => {
         ) : (
           <View>
             <Text>{selectedCourse.code}</Text>
-            <Text>{selectedCourse.name}</Text>
-            <Text>{selectedCourse.venue.name}</Text>
+            <Text>{selectedCourse.title}</Text>
+            <Text>{selectedCourse.venue}</Text>
             <Button
               mode="contained"
               style={{ marginTop: 30 }}

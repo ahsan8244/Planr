@@ -4,12 +4,12 @@ export type RootStackParamList = {
 };
 
 export type BottomTabParamList = {
-  TabOne: undefined;
+  Courses: undefined;
   Generate: undefined;
 };
 
 export type TabOneParamList = {
-  TabOneScreen: undefined;
+  Courses: undefined;
 };
 
 export type GenerateTabParamList = {

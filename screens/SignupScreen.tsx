@@ -113,6 +113,7 @@ export const SignupScreen = () => {
       <TextInput
         label="Password"
         mode="outlined"
+        secureTextEntry
         value={userInput.password}
         onChangeText={password => setUserInput({ ...userInput, password })}
       />
