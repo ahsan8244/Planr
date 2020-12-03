@@ -8,6 +8,8 @@ import { ISubsectionTiming, ILocation } from './ScheduleOptions';
 import { firebase } from '../firebase';
 import { UserContext } from '../context';
 import { GoToMap } from './ScheduleOptions';
+import Colors from '../constants/Colors';
+import useColorScheme from '../hooks/useColorScheme';
 
 interface IUserSchedule {
   Monday: ISubsectionTiming[];
@@ -21,6 +23,7 @@ interface IUserSchedule {
 
 export const MyPlanr: React.FC = () => {
   const { user } = useContext(UserContext);
+  const colorScheme = useColorScheme();
 
   const [currDay, setCurrDay] = useState<Day>('Monday');
   const [loading, setLoading] = useState(false);
@@ -102,7 +105,12 @@ export const MyPlanr: React.FC = () => {
       <Modal
         visible={isModalVisible}
         onDismiss={() => setIsModalVisible(false)}
-        contentContainerStyle={styles.modalContainer}
+        contentContainerStyle={{
+          padding: 20,
+          margin: 10,
+          borderRadius: 5,
+          backgroundColor: Colors[colorScheme].background,
+        }}
       >
         {locations && selectedCourse && (
           <>

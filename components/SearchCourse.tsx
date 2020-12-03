@@ -13,12 +13,16 @@ import {
 
 import { Course, ICourse } from '../types';
 import { firebase } from '../firebase';
+import Colors from '../constants/Colors';
+import useColorScheme from '../hooks/useColorScheme';
 
 export const SearchCourse = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null);
   const [courses, setCourses] = useState<ICourse[]>();
+
+  const colorScheme = useColorScheme();
 
   //@ts-ignore
   const db = firebase.firestore();
@@ -78,7 +82,12 @@ export const SearchCourse = () => {
       <Modal
         visible={isModalVisible}
         onDismiss={() => setIsModalVisible(false)}
-        contentContainerStyle={styles.modalContainer}
+        contentContainerStyle={{
+          padding: 20,
+          margin: 10,
+          borderRadius: 5,
+          backgroundColor: Colors[colorScheme].background,
+        }}
       >
         {!selectedCourse ? (
           <Text>Example Modal. Click outside this area to dismiss.</Text>
@@ -110,12 +119,3 @@ export const SearchCourse = () => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  modalContainer: {
-    padding: 20,
-    margin: 10,
-    borderRadius: 5,
-    backgroundColor: '#fff',
-  },
-});

@@ -10,6 +10,8 @@ import { GenerateStackParamList } from '../navigation/BottomTabNavigator';
 import { Day, ISubsectionToCourse } from '../types';
 import { firebase } from '../firebase';
 import { UserContext } from '../context';
+import Colors from '../constants/Colors';
+import useColorScheme from '../hooks/useColorScheme';
 
 export interface ISubsectionTiming {
   subsection: ISubsectionToCourse;
@@ -95,6 +97,8 @@ export const ScheduleOptions: React.FC<
     setSelectedCourse(course);
     setIsModalVisible(true);
   };
+
+  const colorScheme = useColorScheme();
 
   useEffect(() => {
     const classesMappedToDays: IClassesMappedToDays = {
@@ -196,7 +200,12 @@ export const ScheduleOptions: React.FC<
       <Modal
         visible={isModalVisible}
         onDismiss={() => setIsModalVisible(false)}
-        contentContainerStyle={styles.modalContainer}
+        contentContainerStyle={{
+          padding: 20,
+          margin: 10,
+          borderRadius: 5,
+          backgroundColor: Colors[colorScheme].background,
+        }}
       >
         {locations && selectedCourse && (
           <>
@@ -217,11 +226,5 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
-  },
-  modalContainer: {
-    padding: 20,
-    backgroundColor: 'white',
-    margin: 10,
-    borderRadius: 5,
   },
 });
