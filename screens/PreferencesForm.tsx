@@ -97,7 +97,6 @@ export const PreferencesForm: React.FC<
           onDismiss={() => {
             setShowErrorDialog(false);
             setErrorMessage('');
-            setCourseCodePrefs({});
           }}
         >
           <Dialog.Title>🤔</Dialog.Title>
@@ -109,7 +108,6 @@ export const PreferencesForm: React.FC<
               onPress={() => {
                 setShowErrorDialog(false);
                 setErrorMessage('');
-                setCourseCodePrefs({});
               }}
             >
               OK
@@ -167,7 +165,6 @@ export const PreferencesForm: React.FC<
         style={{ margin: 12 }}
         onChangeText={text => {
           setNumCourses(parseInt(text));
-          setCourseCodePrefs({});
         }}
       />
       <Title style={{ margin: 12 }}>Course Preferences</Title>
@@ -185,9 +182,15 @@ export const PreferencesForm: React.FC<
                 style={{ marginBottom: 12 }}
                 autoCapitalize="characters"
                 onChangeText={text => {
-                  const prefs = courseCodePrefs;
-                  prefs[idx] = text;
-                  //setCourseCodePrefs(prefs);
+                  const prefs: ICoursePrefsDict = {
+                    ...Object.assign({}, courseCodePrefs),
+                    [idx]: text,
+                  };
+                  if (text === '') {
+                    delete prefs[idx];
+                  }
+                  console.log(prefs);
+                  setCourseCodePrefs(prefs);
                 }}
               />
             ))
