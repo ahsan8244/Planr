@@ -39,6 +39,7 @@ export const WeekDayBar: React.FC<{
     const numberToWeekday: {
       [id: string]: string;
     } = {
+      0: 'Sunday',
       1: 'Monday',
       2: 'Tuesday',
       3: 'Wednesday',
