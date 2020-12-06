@@ -189,7 +189,6 @@ export const PreferencesForm: React.FC<
                   if (text === '') {
                     delete prefs[idx];
                   }
-                  console.log(prefs);
                   setCourseCodePrefs(prefs);
                 }}
               />
